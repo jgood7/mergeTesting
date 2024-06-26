@@ -30,6 +30,7 @@ jobs:
       run: |
         git fetch origin ${{ steps.sha.outputs.base }} ${{ steps.sha.outputs.head }} ${{ github.event.pull_request.base.sha }}
         git checkout -b merge-branch ${{ steps.sha.outputs.base }}
+        chmod +x merge-script.sh
         ./merge-script.sh ${{ steps.sha.outputs.base }} ${{ steps.sha.outputs.head }} ${{ github.event.pull_request.base.sha }}
 
         # Check for conflicts
