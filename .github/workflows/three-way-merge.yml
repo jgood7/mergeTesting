@@ -1,0 +1,43 @@
+name: Three-Way Merge
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup Git
+      run: |
+        git config --global user.name "jgood7"
+        git config --global user.email "joshgood211@gmail.com"
+
+    - name: Get base, head, and merge commit SHAs
+      id: sha
+      run: |
+        echo "::set-output name=base::$(git merge-base HEAD ${{ github.event.pull_request.base.sha }})"
+        echo "::set-output name=head::${{ github.event.pull_request.head.sha }}"
+        echo "::set-output name=base::${{ github.event.pull_request.base.sha }}"
+
+    - name: Perform three-way merge
+      run: |
+        git fetch origin ${{ steps.sha.outputs.base }} ${{ steps.sha.outputs.head }} ${{ github.event.pull_request.base.sha }}
+        git checkout -b merge-branch ${{ steps.sha.outputs.base }}
+        ./merge-script.sh ${{ steps.sha.outputs.base }} ${{ steps.sha.outputs.head }} ${{ github.event.pull_request.base.sha }}
+
+        # Check for conflicts
+        if grep -r '<<<<<<<' .; then
+          echo "Merge conflict detected. Please resolve manually."
+          exit 1
+        else
+          git checkout ${{ github.event.pull_request.base.ref }}
+          git merge --no-ff merge-branch
+          git push origin ${{ github.event.pull_request.base.ref }}
+        fi
