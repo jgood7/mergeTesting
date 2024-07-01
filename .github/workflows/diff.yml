@@ -19,5 +19,5 @@ jobs:
       - name: Running OpenAPI Spec diff action
         uses: oasdiff/oasdiff-action/diff@main
         with:
-          base: 'specs/oas1.yml'
-          revision: 'specs/oas2.yml'
+          base: 'specs/oas1.yaml'
+          revision: 'specs/oas2.yaml'
