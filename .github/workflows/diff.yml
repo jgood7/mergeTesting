@@ -1,7 +1,7 @@
 name: OpenAPI Diff
 
 on:
-  push:
+  workflow_dispatch:
     branches:
       - main
   pull_request:
