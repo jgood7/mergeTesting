@@ -1,0 +1,23 @@
+name: OpenAPI Diff
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  openapi-diff:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Running OpenAPI Spec diff action
+        uses: oasdiff/oasdiff-action/diff@main
+        with:
+          base: 'specs/oas1.yaml'
+          revision: 'specs/oas2.yaml'
