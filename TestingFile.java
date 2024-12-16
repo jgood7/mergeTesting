@@ -5,6 +5,6 @@ public class TestingFile{
 
         double i = 1.0; //Changed to double
 
-        System.out.println(i+3); //Changed usage of i
+        System.out.println(i+3); //Changed usage of i to double
     }
 }
