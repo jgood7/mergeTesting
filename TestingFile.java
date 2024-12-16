@@ -3,8 +3,8 @@ public class TestingFile{
     public static void main(String[] args) {
         System.out.println("Hello world");
 
-        double i = 1.0; //Changed to double
+        double j = 1.0; //Changed to j
 
-        System.out.println(i+3); //Changed usage of i
+        System.out.println(j+30); //Changed 3 to 30
     }
 }
