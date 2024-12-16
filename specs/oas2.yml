@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: Enhanced Sample API
+  description: A sample API to illustrate OpenAPI specs with enhancements.
+  version: 1.1.0
+servers:
+  - url: https://api.example.com/v1
+  - url: https://api.example.com/v2
+    description: Version 2 server
+paths:
+  /users:
+    get:
+      summary: Retrieve all users
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userId:
+                      type: integer
+                      example: 1
+                    userName:
+                      type: string
+                      example: John Doe
+  /users/{id}:
+    get:
+      summary: Retrieve a user by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The unique user ID
+      responses:
+        '200':
+          description: A single user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: integer
+                    example: 1
+                  userName:
+                    type: string
+                    example: John Doe
+                  email:
+                    type: string
+                    example: john.doe@example.com
+        '404':
+          description: User not found
+  /users:
+    post:
+      summary: Create a new user
+      requestBody:
+        description: The user to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userName:
+                  type: string
+                  example: Jane Doe
+                email:
+                  type: string
+                  example: jane.doe@example.com
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: integer
+                    example: 2
+                  userName:
+                    type: string
+                    example: Jane Doe
+                  email:
+                    type: string
+                    example: jane.doe@example.com
+        '400':
+          description: Invalid input
